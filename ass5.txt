@@ -1,0 +1,32 @@
+ASS-5:
+air.count()
+air.isnull().sum()
+air.describe()
+air.info()
+A = air.fillna(method='pad')
+A = air.fillna(method='backfill')
+A = air['Ozone'].replace(np.NaN,air['Ozone'].mean())
+
+from sklearn.impute import SimpleImputer
+imp = SimpleImputer(missing_values=np.nan,strategy='mean')
+A = imp.fit_transform(air)
+
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+B = scaler.fit_transform(A)
+
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+B = scaler.fit_transform(A)
+pd.DataFrame(B).describe()
+
+from sklearn.linear_model import LinearRegression
+X=A['Ozone'].values
+X=X.reshape(-1,1)
+Y = A['Temp']
+model = LinearRegression()
+model.fit(X,Y)
+model.score(X,Y)*100
+import matplotlib.pyplot as plt
+plt.scatter(X,Y)
+plt.plot(X, regressor.predict(X), color='red')

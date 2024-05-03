@@ -1,0 +1,13 @@
+CREATE external TABLE hive_table_emp(id int, name string, esal string)
+                
+                STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+                
+                WITH SERDEPROPERTIES ("hbase.columns.mapping" = ":key,cf:name,cf:esal")
+                
+                TBLPROPERTIES ("hbase.table.name" = "emphbase");
+
+hbase shell
+
+create 'table','cf'
+
+scan 'table'

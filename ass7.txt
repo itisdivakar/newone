@@ -1,0 +1,141 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+df = pd.read_csv('heart.csv')
+
+df
+
+
+df = df.drop_duplicates()
+
+#drop_duplicates()- used to remove duplicate rows from a DataFrame.
+
+df
+
+df.isna().sum()
+
+#It is used to count the number of missing values in each column of the DataFrame 
+
+#plots
+
+# 1. Scatter Plot: Age vs Cholesterol with Gender coloring
+
+sns.scatterplot(x='Age', y='Chol', hue='Sex', data=df)
+plt.xlabel('Age')
+plt.ylabel('Cholesterol')
+plt.title('Scatter Plot: Age vs Cholesterol (Gender)')
+
+# Specify gender names in the legend
+plt.legend(title='Sex', labels=['Female', 'Male'])
+
+# Display the plot
+plt.show()
+
+
+# 2. Line Plot: Age vs Max Heart Rate
+
+sns.lineplot(x='Age', y='MaxHR', data=df)
+plt.xlabel('Age')
+plt.ylabel('Max Heart Rate')
+plt.title('Line Plot: Age vs Max Heart Rate')
+plt.show()
+
+# Define a custom color palette with distinct colors for each chest pain type
+custom_palette = {'typical': 'black', 'asymptomatic': 'green', 'nontypical': 'orange', 'nonanginal': 'red'}
+
+# Create the bar plot with the custom color palette
+sns.barplot(x='ChestPain', y='MaxHR', data=df, palette=custom_palette)
+
+# Customize axis labels, title, and legend
+plt.xlabel('Chest Pain Type')
+plt.ylabel('Max Heart Rate')
+plt.title('Bar Plot: Chest Pain vs Max Heart Rate')
+
+# Display the plot
+plt.show()
+
+
+# 4. Box Plot: Cholesterol Distribution by Gender
+
+sns.boxplot(x='Sex', y='Chol', data=df)
+plt.xlabel('Sex (0 = Female, 1 = Male)')
+plt.ylabel('Cholesterol')
+plt.title('Box Plot: Cholesterol Distribution by Gender')
+plt.show()
+
+# 5. Histogram: Resting Blood Pressure Distribution
+
+plt.hist(df['RestBP'], bins=20, edgecolor='black')
+plt.xlabel('Resting Blood Pressure')
+plt.ylabel('Frequency')
+plt.title('Histogram: Resting Blood Pressure Distribution')
+plt.show()
+
+#df['RestBP']-  histogram should be based on the 'RestBP' column from your DataFrame
+
+#bins=20 specifies the number of bars.
+
+# 6. Count Plot: Distribution of Chest Pain Types
+
+sns.countplot(x='ChestPain', data=df)
+plt.xlabel('Chest Pain Type')
+plt.ylabel('Count')
+plt.title('Count Plot: Distribution of Chest Pain Types')
+plt.show()
+
+# Define a dictionary to map gender values to their names
+gender_mapping = {0: 'Female', 1: 'Male'}
+
+# Create the KDE plot with the modified legend
+sns.kdeplot(data=df, x='MaxHR', hue='Sex')
+plt.xlabel('Max Heart Rate')
+plt.ylabel('Density')
+plt.title('KDE Plot: Distribution of Max Heart Rate by Gender')
+
+# Modify the legend using the gender_mapping dictionary
+plt.legend(title='Gender', labels=[gender_mapping[0], gender_mapping[1]])
+
+# Display the plot
+plt.show()
+
+
+# 9. Pair Plot: Pairwise relationships with scatter plots and histograms
+
+sns.pairplot(df[['Age', 'RestBP', 'Chol', 'MaxHR', 'Oldpeak']])
+plt.suptitle('Pair Plot: Pairwise Relationships', y=1.02)
+plt.show()
+
+# 10. Heatmap: Correlation between numerical attributes
+
+sns.heatmap(df[['Age', 'RestBP', 'Chol', 'MaxHR', 'Oldpeak', 'Ca']].corr(), annot=True)
+plt.title('Heatmap: Correlation between Numerical Attributes')
+plt.show()
+
+
+chest_pain_counts = df['ChestPain'].value_counts()
+plt.pie(chest_pain_counts, labels=chest_pain_counts.index, autopct='%1.1f%%', startangle=-90)
+plt.title('Pie Chart: Distribution of Chest Pain Types')
+plt.show()
+
+import numpy as np
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+#  df is your original dataset
+# Create a smaller subset with only a few rows
+subset_df = df.sample(n=50, random_state=1)  # Select 50 random rows for demonstration
+
+# Plotting the violin plot
+plt.figure(figsize=(10, 6))
+sns.violinplot(x='Age', y='Chol', hue='Sex', data=subset_df)
+plt.xlabel('Age')
+plt.ylabel('Cholesterol')
+plt.title('Violin Plot: Age vs Cholesterol (Gender)')
+plt.legend(title='Sex')
+plt.show()
+
+
